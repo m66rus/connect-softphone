@@ -1,0 +1,36 @@
+{
+    "Details": {
+        "ContactData": {
+            "Attributes": {},
+            "Channel": "VOICE",
+            "ContactId": "3a2afac7-e4b9-47e8-bb4f-a14f60ee4d1c",
+            "CustomerEndpoint": {
+                "Address": "+441189531000",
+                "Type": "TELEPHONE_NUMBER"
+            },
+            "InitialContactId": "3a2afac7-e4b9-47e8-bb4f-a14f60ee4d1c",
+            "InitiationMethod": "INBOUND",
+            "InstanceARN": "arn:aws:connect:eu-west-2:739126103191:instance/cdcc8bcb-7fe9-424a-9b39-24fca49aea75",
+            "MediaStreams": {
+                "Customer": {
+                    "Audio": "None"
+                }
+            },
+            "PreviousContactId": "3a2afac7-e4b9-47e8-bb4f-a14f60ee4d1c",
+            "Queue": {
+                "ARN": "arn:aws:connect:eu-west-2:739126103191:instance/cdcc8bcb-7fe9-424a-9b39-24fca49aea75/queue/3f4025e3-f046-4671-8b89-02a667db7f3a",
+                "Name": "Ops Clean",
+                "OutboundCallerId": {
+                    "Address": "+441213680206",
+                    "Type": "TELEPHONE_NUMBER"
+                }
+            },
+            "SystemEndpoint": {
+                "Address": "+441418460495",
+                "Type": "TELEPHONE_NUMBER"
+            }
+        },
+        "Parameters": {}
+    },
+    "Name": "ContactFlowEvent"
+}
