@@ -40,17 +40,32 @@
 			});
             
             // subscribe to events
-            connect.agent(subscribeToAgentEvents)
+            connect.agent(subscribeToAgentEvents);
+            connect.contact(subscribeToContactEvents);
+
             //connect.contact(subscribeToContactEvents)
             
             function subscribeToAgentEvents(agent) {
                 mAgent = agent;
                 var AgentName = mAgent.getName();
                 var AgentRoutingProfile = mAgent.getRoutingProfile();
+                var QARNs = agent.getAllQueueARNs();
+
                 
                 
-                //AgentData.innerHTML = '<h3>Hi ' + AgentName + '!</h3><br/>Routing ' + ProfileName;
+                AgentData.innerHTML = '<h3>ARNS ' + QARNs + '!</h3>';
             
+            }
+
+            function subscribeToContactEvents(contact) {
+                mContact = contact;
+                var queue = mContact.getQueue();
+                var queueTime = mContact.getQueueTimestamp();
+                var contactAttrs = mContact.getAttributes();
+
+                AgentData.innerHTML = '<h3>Queuename ' + queue.name + '!</h3><br/>';
+                AgentData.innerHTML = AgentData.innerHTML + queueTime + '!</h3><br/>';
+                AgentData.innerHTML = AgentData.innerHTML + contactAttrs + '!</h3><br/>';
             }
             
             function signOut()
