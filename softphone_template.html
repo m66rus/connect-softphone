@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<title>Amazon Connect - Template v2.5</title>
+        <meta charset="UTF-8"> 
+		<script src="connect-streams.js"></script> 
+        <style>
+            *, body {
+                margin: 0;
+                padding:0
+            }
+            iframe {
+                border: 0px
+            }
+            #containerDiv {
+                width: 400px;
+                height: 465px
+            }
+        </style>
+	</head>
+	<body>
+        <div id="containerDiv"></div>
+		<script>
+            /*************** Begin Mod Area ***************/
+
+            /* Edit the instanceName below with your instance alias */
+            var instanceName = "m66rus";
+            mAgent = null;
+            /*************** End Mod Area ***************/
+			connect.core.initCCP(containerDiv, {
+                ccpUrl:"https://" + instanceName + ".awsapps.com/connect/ccp-v2#/",
+                loginPopup: true,
+                softphone: {
+                    allowFramedSoftphone: true,   // optional
+                    disableRingtone: false,       // optional
+                    ringtoneUrl: "./ringtone.mp3" // optional
+                 }
+			});
+            
+            // subscribe to events
+            connect.agent(subscribeToAgentEvents)
+            //connect.contact(subscribeToContactEvents)
+            
+            function subscribeToAgentEvents(agent) {
+                mAgent = agent;
+                AgentName = mAgent.getName();
+                AgentRoutingProfile = mAgent.getRoutingProfile();
+                
+                
+                AgentData.innerHTML = '<h3>Hi ' + AgentName + '!</h3><br/>Routing ' + ProfileName;
+            
+            }
+            
+            
+            window.addEventListener("beforeunload", function (event) {
+                    if (mAgent != null) {
+                        states = mAgent.getAgentStates();
+                        // "states" is an array of changeable states. You can filter the desired state to change by name.
+                        offlineState = states.filter(state => state.name === "Offline")[0];
+
+                        // Change agent state
+                        mAgent.setState(offlineState, {
+                            success: function () {
+                                console.log("SetState succeeded");
+                            },
+                            failure: function () {
+                                console.log("SetState failed");
+                            }
+                        });
+                    }
+                });
+                        
+                    
+            
+        </script>
+        <div id="AgentData">
+
+        </div>
+	</body>
+</html>

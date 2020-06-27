@@ -1,0 +1,88 @@
+<html>
+
+<head>
+
+
+
+    <style>
+        .containerDiv iframe {
+            display: none;
+        }
+    </style>
+
+
+    <script type="text/javascript" src="connect-streams.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#amazonConnectContainer").click(function (event) {
+                event.preventDefault();
+                $("#containerDiv iframe").remove();
+                if (typeof connect != "undefined" && !connect.core.initialized) {
+                    window.myCPP = window.myCPP || {};
+                    //replace with the CCP URL for your Amazon Connect instance
+                    var ccpUrl = "https://m66rus.awsapps.com/connect/ccp-v2#/";
+                    connect.core.initCCP(containerDiv, {
+                        ccpUrl: ccpUrl,
+                        loginPopup: false,
+                        softphone: {
+                            allowFramedSoftphone: true,
+                            disableRingtone: true,
+                            ringtoneUrl: true
+                        }
+                    });
+                    connect.contact(subscribeToContactEvents);
+                    connect.agent(subscribeToAgentEvents);
+                }
+                var awidth = 320; //Window width
+                var aheight = 465; //Window height
+                var atop = (screen.availHeight - aheight) / 2; //Window top position
+                var aleft = (screen.availWidth - awidth) / 2; //Center window
+
+                window.open(ccpUrl, 'newwindow', 'height=465, width=320, top=' + atop + ', left=' + aleft + ', toolbar=no, menubar=no,scrollbars = no, resizable = no, location = no, status = no');
+                 });
+
+            function subscribeToContactEvents(contact) {
+                window.myCPP.contact = contact;
+                logInfoMsg("Subscribing to events for contact");
+                if (contact.getActiveInitialConnection()
+                    && contact.getActiveInitialConnection().getEndpoint()) {
+                    logInfoMsg("New contact is from " + contact.getActiveInitialConnection().getEndpoint().phoneNumber); // Subscriber
+                    phone
+                } else {
+                    logInfoMsg("This is an existing contact for this agent");
+                }
+                logInfoMsg("Contact is from queue " + contact.getQueue().name);
+                logInfoMsg("Contact attributes are " + JSON.stringify(contact.getAttributes())); // user attribute
+            }
+            function subscribeToAgentEvents(agent) {
+                window.myCPP.agent = agent;
+                agentGreetingDiv.innerHTML = '<h3>Hi ' + agent.getName() + '!</h3>';
+                logInfoMsg("Subscribing to events for agent " + agent.getName());
+                logInfoMsg("Agent is currently in status of " + agent.getStatus().name);
+                // Get phone status name
+                displayAgentStatus(agent.getStatus().name);
+                // agent.onRefresh(handleAgentRefresh);
+                // agent.onRoutable(handleAgentRoutable);
+                // agent.onNotRoutable(handleAgentNotRoutable);
+                // agent.onOffline(handleAgentOffline);
+            }
+            function logInfoMsg(msg) {
+                connect.getLog().info(msg);
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <! -- phone icon, used to call out the phone interface -->
+        <div id="amazonConnectContainer">
+            <img src="/Public/img/amazon_tel.jpg" alt="">
+        </div>
+        <! -- where iframe is generated, it can be placed anywhere on the web page -->
+            <div id="containerDiv" title="Amazon Connect">
+                <!--Amazon CCP is hiding in here-->#
+            </div>
+</body>
+
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<html>
+
+<head>
+  <script type="text/javascript" src="connect-streams.js"></script>
+</head>
+<!-- Add the call to init() as an onload so it will only run once the page is loaded -->
+
+<body onload="init()">
+  <div id=containerDiv style="width: 400px;height: 800px;"></div>
+  <script type="text/javascript">
+    var instanceURL = "https://m66rus.awsapps.com/connect/ccp-v2#/";
+    // initialise the streams api
+    function init() {
+      // initialize the ccp
+      connect.core.initCCP(containerDiv, {
+        ccpUrl: instanceURL,            // REQUIRED
+        loginPopup: true,               // optional, defaults to `true`
+        region: "eu-central-1",         // REQUIRED for `CHAT`, optional otherwise
+        softphone: {                    // optional
+          allowFramedSoftphone: true,   // optional
+          disableRingtone: false,       // optional
+          ringtoneUrl: "./ringtone.mp3" // optional
+        }
+      });
+      connect.contact(subscribeToContactEvents);
+      connect.agent(subscribeToAgentEvents);
+    }
+
+    function subscribeToContactEvents(contact) {
+      //window.myCPP.contact = contact;
+      logInfoMsg("Subscribing to events for contact");
+      if (contact.getActiveInitialConnection()
+        && contact.getActiveInitialConnection().getEndpoint()) {
+        logInfoMsg("New contact is from " + contact.getActiveInitialConnection().getEndpoint().phoneNumber); // Subscriber
+        phone
+      } else {
+        logInfoMsg("This is an existing contact for this agent");
+      }
+      logInfoMsg("Contact is from queue " + contact.getQueue().name);
+      logInfoMsg("Contact attributes are " + JSON.stringify(contact.getAttributes())); // user attribute
+    }
+
+    function subscribeToAgentEvents(agent) {
+      //window.myCPP.agent = agent;
+      agentGreetingDiv.innerHTML = '<h3>Hi ' + agent.getName() + '!</h3>';
+      logInfoMsg("Subscribing to events for agent " + agent.getName());
+      logInfoMsg("Agent is currently in status of " + agent.getStatus().name);
+    }
+    
+    function logInfoMsg(msg) {
+      connect.getLog().info(msg);
+      console.log("Logged")
+    }
+  </script>
+  <!-- Softphone region -->
+  
+        <div id="amazonConnectContainer">
+            <img src="/Public/img/amazon_tel.jpg" alt="">
+        </div>
+        <!-- where iframe is generated, it can be placed anywhere on the web page -->
+            <div id="containerDiv" title="Amazon Connect">
+                <!--Amazon CCP is hiding in here-->#
+            </div>
+        <div id="agentGreetingDiv">
+
+
+        </div>
+</body>
+
+</html>
