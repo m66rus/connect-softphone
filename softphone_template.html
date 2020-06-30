@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-US">
 	<head>
-		<title>Amazon Connect - Template v2.7</title>
+		<title>Amazon Connect - Template v1.0</title>
         <meta charset="UTF-8"> 
 		<script src="connect-streams.js"></script> 
         <style>
@@ -26,7 +26,8 @@
             /* Edit the instanceName below with your instance alias */
             var instanceName = "m66rus";
             mAgent = null;
-            var timeoutInMiliseconds = 60000;
+            /* This is the timeout for currently set to 4hrs */
+            var timeoutInMiliseconds = 14400000;
             var timeoutId;
             /*************** End Mod Area ***************/
 			connect.core.initCCP(containerDiv, {
@@ -47,9 +48,6 @@
                 mAgent = agent;
                 var AgentName = mAgent.getName();
                 var AgentRoutingProfile = mAgent.getRoutingProfile();
-                
-                
-                //AgentData.innerHTML = '<h3>Hi ' + AgentName + '!</h3><br/>Routing ' + ProfileName;
             
             }
             
