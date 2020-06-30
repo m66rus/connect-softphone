@@ -1,4 +1,4 @@
-This GitHub repositry is for Amazon Connect (AWS)
+This GitHub repositry is for **Amazon Connect (AWS)**
 
 Please feel free to use and provide feedback how it has helped and what updates
 could be made.
@@ -11,8 +11,9 @@ in and therefore could route calls to them.
 
 There will be flavours of the softphone so you can pick and chose the ones that will help.
 
-'''javascript
+```javascript
  var timeoutInMiliseconds = 14400000;
-
+```
  is where you define in milliseconds the inactive time
- 
+
+
